@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Prediction Result</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Lottie Player -->
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      background: linear-gradient(135deg, #e0f7fa, #ffe4e1, #fce1ec, #f5f5dc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .result-container {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 16px;
+      width: 420px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      z-index: 2;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    p {
+      font-size: 16px;
+      margin: 10px 0;
+      color: #555;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 10px 20px;
+      background: #5a9bd3;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    a:hover {
+      background: #79b0e1;
+    }
+
+    /* Mouse trail */
+    .dot {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 0 8px white;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Full-screen loader */
+    .loader-overlay {
+      position: fixed;
+      inset: 0;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading screen -->
+  <div class="loader-overlay" id="loader">
+    <dotlottie-player
+      src="https://lottie.host/9ed267c7-2bc1-40ee-b61b-32514c8b7125/3HFSZyu4Pv.lottie"
+      background="transparent"
+      speed="1"
+      style="width: 200px; height: 200px"
+      loop
+      autoplay>
+    </dotlottie-player>
+  </div>
+
+  <!-- Main Result Container -->
+  <div class="result-container">
+    <h2>Prediction Result</h2>
+    <p><strong>Age:</strong> {{ age }}</p>
+    <p><strong>Income:</strong> {{ income }}</p>
+    <p><strong>Result:</strong> {{ result }}</p>
+    <a href="/">Go Back</a>
+  </div>
+
+  <!-- Mouse Trail -->
+  <script>
+    const dots = [];
+    for (let i = 0; i < 5; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+      document.body.appendChild(dot);
+      dots.push({ element: dot, x: 0, y: 0 });
+    }
+
+    let mouseX = 0, mouseY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.pageX;
+      mouseY = e.pageY;
+    });
+
+    function animateDots() {
+      let x = mouseX;
+      let y = mouseY;
+
+      dots.forEach((dot, index) => {
+        dot.x += (x - dot.x) * 0.2;
+        dot.y += (y - dot.y) * 0.2;
+        dot.element.style.left = dot.x + 'px';
+        dot.element.style.top = dot.y + 'px';
+
+        x = dot.x;
+        y = dot.y;
+      });
+
+      requestAnimationFrame(animateDots);
+    }
+
+    animateDots();
+  </script>
+
+  <!-- Loader delay: 5 seconds -->
+  <script>
+    window.onload = function () {
+      setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+      }, 3000);
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Customer Prediction</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+
+  <!-- Lottie Player -->
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      background: linear-gradient(135deg, #e0f7fa, #ffe4e1, #fce1ec, #f5f5dc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .form-container {
+      background: white;
+      padding: 35px 40px;
+      border-radius: 16px;
+      width: 400px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      z-index: 2;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      font-size: 15px;
+      margin-top: 15px;
+      color: #444;
+    }
+
+    label i {
+      margin-right: 10px;
+      color: #5a9bd3;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: border 0.3s;
+    }
+
+    input:focus {
+      border-color: #5a9bd3;
+      outline: none;
+    }
+
+    button {
+      margin-top: 25px;
+      width: 100%;
+      padding: 12px;
+      background-color: #5a9bd3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #79b0e1;
+    }
+
+    .lottie-container {
+      margin-top: -35px;
+    }
+
+    /* Mouse trail dots */
+    .dot {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 0 8px white;
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <!-- Form -->
+  <div class="form-container">
+    <h2>Customer Purchase Prediction</h2>
+    <form action="/predict" method="post">
+      <label for="age"><i class="fas fa-user"></i>Age</label>
+      <input type="number" name="age" required />
+
+      <label for="income"><i class="fas fa-dollar-sign"></i>Income</label>
+      <input type="number" name="income" required />
+
+      <button type="submit">Predict</button>
+
+      <div class="lottie-container">
+        <dotlottie-player
+          src="https://lottie.host/d9d65788-1879-4d96-b598-bf6a7b4392e6/Yk77FN3pwb.lottie"
+          background="transparent"
+          speed="1"
+          style="width: 350px; height: 300px"
+          loop
+          autoplay>
+        </dotlottie-player>
+      </div>
+    </form>
+  </div>
+
+  <!-- Mouse trail script -->
+  <script>
+    const dots = [];
+    for (let i = 0; i < 5; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+      document.body.appendChild(dot);
+      dots.push({ element: dot, x: 0, y: 0 });
+    }
+
+    let mouseX = 0, mouseY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.pageX;
+      mouseY = e.pageY;
+    });
+
+    function animateDots() {
+      let x = mouseX;
+      let y = mouseY;
+
+      dots.forEach((dot, index) => {
+        dot.x += (x - dot.x) * 0.2;
+        dot.y += (y - dot.y) * 0.2;
+        dot.element.style.left = dot.x + 'px';
+        dot.element.style.top = dot.y + 'px';
+
+        x = dot.x;
+        y = dot.y;
+      });
+
+      requestAnimationFrame(animateDots);
+    }
+
+    animateDots();
+  </script>
+</body>
+</html>

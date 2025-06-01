@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Customer Purchase Prediction</title>
+
+  <!-- Google Font (Stylish Display) -->
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Doodle+Shadow&display=swap" rel="stylesheet">
+
+  <!-- Lottie Player -->
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Rubik Doodle Shadow', cursive;
+      height: 100vh;
+      background: linear-gradient(45deg, #f0f8ff, #ffe4e1, #fce1ec, #f5f5dc);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      font-size: 48px;
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+      z-index: 2;
+    }
+
+    .btn-start {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      padding: 12px 30px;
+      background-color: #5a9bd3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      z-index: 2;
+    }
+
+    .btn-start:hover {
+      background-color: #79b0e1;
+    }
+
+    /* Lottie at the bottom */
+    .lottie-container {
+      position: absolute;
+      bottom: 10px;
+      z-index: 2;
+    }
+
+    /* Mouse trail */
+    .dot {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 0 8px white;
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <!-- Title -->
+  <h1>Predict Customer Purchase Based on Age and Income</h1>
+
+  <!-- Button -->
+  <a href="/form" class="btn-start">Start Prediction</a>
+
+  <!-- Lottie Animation at Bottom -->
+  <div class="lottie-container">
+    <dotlottie-player
+      src="https://lottie.host/7d440784-7355-4c4e-a37c-ca5549f208dc/ZU5qbUzzwP.lottie"
+      background="transparent"
+      speed="1"
+      style="width: 300px; height: 300px"
+      loop
+      autoplay>
+    </dotlottie-player>
+  </div>
+
+  <!-- Mouse Trail Script -->
+  <script>
+    const dots = [];
+    for (let i = 0; i < 5; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+      document.body.appendChild(dot);
+      dots.push({ element: dot, x: 0, y: 0 });
+    }
+
+    let mouseX = 0, mouseY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.pageX;
+      mouseY = e.pageY;
+    });
+
+    function animateDots() {
+      let x = mouseX;
+      let y = mouseY;
+
+      dots.forEach((dot, index) => {
+        dot.x += (x - dot.x) * 0.2;
+        dot.y += (y - dot.y) * 0.2;
+        dot.element.style.left = dot.x + 'px';
+        dot.element.style.top = dot.y + 'px';
+
+        x = dot.x;
+        y = dot.y;
+      });
+
+      requestAnimationFrame(animateDots);
+    }
+
+    animateDots();
+  </script>
+</body>
+</html>
