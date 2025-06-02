@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Customer Prediction</title>
 
   <!-- Google Font -->
@@ -29,6 +30,7 @@
       align-items: center;
       overflow: hidden;
       position: relative;
+      padding: 20px;
     }
 
     .form-container {
@@ -36,6 +38,7 @@
       padding: 35px 40px;
       border-radius: 16px;
       width: 400px;
+      max-width: 100%;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       text-align: center;
       z-index: 2;
@@ -106,6 +109,41 @@
       box-shadow: 0 0 8px white;
       pointer-events: none;
       z-index: 1;
+    }
+
+    /* Responsive design for mobile */
+    @media (max-width: 480px) {
+      .form-container {
+        width: 90%;
+        padding: 25px 20px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      label {
+        font-size: 14px;
+      }
+
+      input {
+        font-size: 14px;
+        padding: 8px;
+      }
+
+      button {
+        font-size: 15px;
+        padding: 10px;
+      }
+
+      .lottie-container dotlottie-player {
+        width: 100% !important;
+        height: auto !important;
+      }
+
+      body {
+        overflow-y: auto;
+      }
     }
   </style>
 </head>
