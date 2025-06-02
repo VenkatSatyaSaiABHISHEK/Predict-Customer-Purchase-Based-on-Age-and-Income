@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Customer Purchase Prediction</title>
 
-  <!-- Google Font (Stylish Display) -->
   <link href="https://fonts.googleapis.com/css2?family=Rubik+Doodle+Shadow&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- Lottie Player -->
   <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 
   <style>
@@ -29,6 +29,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      padding: 20px;
     }
 
     @keyframes gradientShift {
@@ -37,17 +38,24 @@
       100% { background-position: 0% 50%; }
     }
 
-    h1 {
-      font-size: 48px;
-      color: #333;
+    /* Content Container to manage z-index */
+    .content {
+      position: relative;
+      z-index: 10;
       text-align: center;
-      margin-bottom: 20px;
-      z-index: 2;
+    }
+
+    h1 {
+      font-size: clamp(28px, 6vw, 48px);
+      color: #333;
+      margin-bottom: 30px;
+      line-height: 1.2;
+      max-width: 90%;
     }
 
     .btn-start {
       font-family: 'Poppins', sans-serif;
-      font-size: 18px;
+      font-size: clamp(16px, 4vw, 18px);
       padding: 12px 30px;
       background-color: #5a9bd3;
       color: white;
@@ -55,22 +63,36 @@
       border-radius: 8px;
       cursor: pointer;
       text-decoration: none;
-      transition: background-color 0.3s ease;
-      z-index: 2;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      position: relative;
+      z-index: 10;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 
     .btn-start:hover {
       background-color: #79b0e1;
+      transform: translateY(-2px);
     }
 
-    /* Lottie at the bottom */
+    .btn-start:active {
+      transform: translateY(0);
+    }
+
     .lottie-container {
       position: absolute;
       bottom: 10px;
       z-index: 2;
+      width: clamp(200px, 50vw, 300px);
+      height: clamp(200px, 50vw, 300px);
+      left: 50%;
+      transform: translateX(-50%);
     }
 
-    /* Mouse trail */
+    dotlottie-player {
+      width: 100%;
+      height: 100%;
+    }
+
     .dot {
       position: absolute;
       width: 12px;
@@ -80,29 +102,33 @@
       box-shadow: 0 0 8px white;
       pointer-events: none;
       z-index: 1;
+      opacity: 0.8;
+    }
+
+    @media (min-width: 768px) {
+      .lottie-container {
+        left: unset;
+        transform: unset;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Title -->
-  <h1>Predict Customer Purchase Based on Age and Income</h1>
+  <div class="content">
+    <h1>Predict Customer Purchase Based on Age and Income</h1>
+    <a href="/form" class="btn-start">Start Prediction</a>
+  </div>
 
-  <!-- Button -->
-  <a href="/form" class="btn-start">Start Prediction</a>
-
-  <!-- Lottie Animation at Bottom -->
   <div class="lottie-container">
     <dotlottie-player
       src="https://lottie.host/7d440784-7355-4c4e-a37c-ca5549f208dc/ZU5qbUzzwP.lottie"
       background="transparent"
       speed="1"
-      style="width: 300px; height: 300px"
       loop
       autoplay>
     </dotlottie-player>
   </div>
 
-  <!-- Mouse Trail Script -->
   <script>
     const dots = [];
     for (let i = 0; i < 5; i++) {
@@ -123,9 +149,10 @@
       let x = mouseX;
       let y = mouseY;
 
-      dots.forEach((dot, index) => {
+      dots.forEach((dot) => {
         dot.x += (x - dot.x) * 0.2;
         dot.y += (y - dot.y) * 0.2;
+
         dot.element.style.left = dot.x + 'px';
         dot.element.style.top = dot.y + 'px';
 
