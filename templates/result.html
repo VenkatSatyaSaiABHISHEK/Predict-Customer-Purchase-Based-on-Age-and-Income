@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Prediction Result</title>
 
   <!-- Google Font -->
@@ -19,20 +20,22 @@
 
     body {
       font-family: 'Poppins', sans-serif;
-      height: 100vh;
+      min-height: 100vh;
       background: linear-gradient(135deg, #e0f7fa, #ffe4e1, #fce1ec, #f5f5dc);
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
       position: relative;
+      padding: 20px;
+      overflow-x: hidden;
     }
 
     .result-container {
       background: white;
-      padding: 30px 40px;
+      padding: 35px 40px;
       border-radius: 16px;
       width: 420px;
+      max-width: 100%;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       text-align: center;
       z-index: 2;
@@ -41,12 +44,14 @@
     h2 {
       margin-bottom: 20px;
       color: #333;
+      font-size: 24px;
     }
 
     p {
       font-size: 16px;
       margin: 10px 0;
       color: #555;
+      word-break: break-word;
     }
 
     a {
@@ -86,6 +91,32 @@
       justify-content: center;
       align-items: center;
       z-index: 9999;
+    }
+
+    /* Mobile responsive design */
+    @media (max-width: 480px) {
+      .result-container {
+        width: 90%;
+        padding: 25px 20px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+
+      a {
+        padding: 10px 18px;
+        font-size: 14px;
+      }
+
+      .loader-overlay dotlottie-player {
+        width: 150px !important;
+        height: 150px !important;
+      }
     }
   </style>
 </head>
@@ -132,12 +163,11 @@
       let x = mouseX;
       let y = mouseY;
 
-      dots.forEach((dot, index) => {
+      dots.forEach((dot) => {
         dot.x += (x - dot.x) * 0.2;
         dot.y += (y - dot.y) * 0.2;
         dot.element.style.left = dot.x + 'px';
         dot.element.style.top = dot.y + 'px';
-
         x = dot.x;
         y = dot.y;
       });
@@ -148,7 +178,7 @@
     animateDots();
   </script>
 
-  <!-- Loader delay: 5 seconds -->
+  <!-- Loader delay -->
   <script>
     window.onload = function () {
       setTimeout(() => {
